@@ -55,13 +55,8 @@ end)
 function GetCrosshairAiming()
     local ret = nil
     local start, fin = GetCoordsInFrontOfCam(0, 500)
-    local _, _, hitPos1, _, _, material1 = GetShapeTestResultIncludingMaterial(StartShapeTestRay(start.x, start.y, start.z, fin.x, fin.y, fin.z, 1, PlayerPedId(), 1))
-    local _, _, hitPos2, _, _, material2 = GetShapeTestResultIncludingMaterial(StartShapeTestRay(start.x, start.y, start.z, fin.x, fin.y, fin.z, 16, PlayerPedId(), 1))
-    if #(hitPos1 - start) < #(hitPos2 - start) then
-        ret = hitPos1
-    else
-        ret = hitPos2
-    end
+    local _, _, hitPos1, _, _, material1 = GetShapeTestResultIncludingMaterial(StartShapeTestRay(start.x, start.y, start.z, fin.x, fin.y, fin.z, 17, PlayerPedId(), 1))
+    ret = hitPos1
     return ret
 end
 
@@ -69,13 +64,8 @@ function GetWeaponAiming()
     local ret = nil
     local start, fin = GetCoordsInFrontOfCam(0, 500)
     local weaponPos = GetEntityCoords(GetCurrentPedWeaponEntityIndex(PlayerPedId()))
-    local _, _, WhitPos1, _, Wmaterial, _ = GetShapeTestResultIncludingMaterial(StartShapeTestRay(weaponPos.x, weaponPos.y, weaponPos.z, hitPos.x, hitPos.y, hitPos.z, 1, PlayerPedId(), 1))
-    local _, _, WhitPos2, _, Wmaterial, _ = GetShapeTestResultIncludingMaterial(StartShapeTestRay(weaponPos.x, weaponPos.y, weaponPos.z, hitPos.x, hitPos.y, hitPos.z, 16, PlayerPedId(), 1))
-    if #(WhitPos1 - start) < #(WhitPos2 - start) then
-        ret = WhitPos1
-    else
-        ret = WhitPos2
-    end
+    local _, _, WhitPos1, _, Wmaterial, _ = GetShapeTestResultIncludingMaterial(StartShapeTestRay(weaponPos.x, weaponPos.y, weaponPos.z, hitPos.x, hitPos.y, hitPos.z, 17, PlayerPedId(), 1))
+    ret = WhitPos1
     return ret
 end
 
