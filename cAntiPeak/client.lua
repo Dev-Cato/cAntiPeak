@@ -1,5 +1,5 @@
  --╔══════════════════════════════════════════════════╗--
----║                    ©cato.dev                     ║---
+---║           ©cato.dev >> dsc.gg/catodev            ║---
  --╚══════════════════════════════════════════════════╝--
 
 CheckDistance = 15.0
@@ -23,14 +23,14 @@ CreateThread(function()
             sleep = 1
             local start, fin = GetCoordsInFrontOfCam(0, 500)
 
-            hitPos = GetCrosshairAiming()
-            WhitPos = GetWeaponAiming()
+            hitPos, material = GetCrosshairAiming()
+            WhitPos, Wmaterial = GetWeaponAiming()
 
             if not (hitPos == vector3(0, 0, 0)) then
                 if #(start - WhitPos) < CheckDistance then
                     local ignore = false
                     for _, i in pairs(IgnoredMaterials) do
-                        if material == i then
+                        if material == i or Wmaterial == i then
                             ignore = true
                         end
                     end
@@ -53,20 +53,17 @@ CreateThread(function()
 end)
 
 function GetCrosshairAiming()
-    local ret = nil
     local start, fin = GetCoordsInFrontOfCam(0, 500)
-    local _, _, hitPos1, _, _, material1 = GetShapeTestResultIncludingMaterial(StartShapeTestRay(start.x, start.y, start.z, fin.x, fin.y, fin.z, 17, PlayerPedId(), 1))
-    ret = hitPos1
-    return ret
+    local _, _, hitPos, _, _, material = GetShapeTestResultIncludingMaterial(StartShapeTestRay(start.x, start.y, start.z, fin.x, fin.y, fin.z, 4294967295, PlayerPedId(), 1))
+    return hitPos, material
 end
 
 function GetWeaponAiming()
-    local ret = nil
     local start, fin = GetCoordsInFrontOfCam(0, 500)
     local weaponPos = GetEntityCoords(GetCurrentPedWeaponEntityIndex(PlayerPedId()))
-    local _, _, WhitPos1, _, Wmaterial, _ = GetShapeTestResultIncludingMaterial(StartShapeTestRay(weaponPos.x, weaponPos.y, weaponPos.z, hitPos.x, hitPos.y, hitPos.z, 17, PlayerPedId(), 1))
-    ret = WhitPos1
-    return ret
+    local _, _, WhitPos, _, Wmaterial, _ = GetShapeTestResultIncludingMaterial(StartShapeTestRay(weaponPos.x, weaponPos.y, weaponPos.z, hitPos.x, hitPos.y, hitPos.z, 4294967295, PlayerPedId(), 1))
+
+    return WhitPos, Wmaterial
 end
 
 function GetCoordsInFrontOfCam(...)
